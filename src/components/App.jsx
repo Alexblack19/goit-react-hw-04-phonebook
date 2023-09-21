@@ -7,18 +7,13 @@ import { ContactList } from './ContactList/ContactList';
 import Notiflix from 'notiflix';
 
 export function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('contact')) ?? [];
+  });
   const [filter, setFilter] = useState('');
 
-  // useEffect(() => {
-  //   const localData = localStorage.getItem('contact');
-  //   if (localData) {
-  //     setContacts(JSON.parse(localData));
-  //   }
-  // }, []);
-
   useEffect(() => {
-    localStorage.setItem('contact', JSON.stringify(contacts));
+    window.localStorage.setItem('contact', JSON.stringify(contacts));
   }, [contacts]);
 
   const formSubmitHandler = dataForm => {
